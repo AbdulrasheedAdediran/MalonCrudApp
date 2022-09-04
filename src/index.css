@@ -1,0 +1,254 @@
+@import url('https://fonts.googleapis.com/css2?family=Gruppo&display=swap');
+
+:root {
+    color-scheme: light dark;
+    --light-color: hsla(0, 0%, 100%, 0.5);
+    --dark-color: hsla(220, 100%, 3%, 0.935);
+    --foreground-color: hsla(231, 77%, 90%, 0.75);
+    --foreground: var(var(--foreground-color));
+    --background: var(var(--light-color));
+    --text: var(var(--dark-color));
+    --heading: var(var(--dark-color));
+    --icon-color: hsla(10, 99%, 34%, 0.829);
+    --icon-hover: hsla(10, 99%, 34%, 0.829);
+}
+
+.dark {
+    --white: hsl(0, 0%, 100%);
+    --light-color: hsla(231, 77%, 90%, 0.75);
+    --heading: var(var(--white));
+    --text: var(--light-color);
+    --foreground-color: hsla(223, 54%, 13%, 0.935);
+    --foreground: var(--foreground-color);
+    --background: var(--dark-color);
+    --icon-hover: hsla(10, 99%, 34%, 0.829);
+    --icon-color: hsl(0, 0%, 100%);
+}
+
+* *,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    font-size: 16px;
+    max-width: 1440px;
+    width: 100%;
+    height: 100%;
+}
+
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: lighter;
+    letter-spacing: .05rem;
+    text-align: justify;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Gruppo', cursive;
+    letter-spacing: 0;
+    color: var(--heading-color);
+    font-weight: normal;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    list-style: none;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+    color: inherit;
+}
+
+::placeholder {
+    opacity: 0.65;
+}
+
+textarea {
+    resize: none;
+    padding: 1rem;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+/* input[type="text"],  textarea{ 
+ border: none;
+box-shadow:1px 1px 10px 5px rgba(1,1,1,0.2);
+transition: 0.6s ease;
+  background: transparent;
+
+} */
+
+/* input[type="text"]:focus, input[type="email"]:focus,  textarea:focus{ 
+box-shadow:0px 10px 10px -8px rgba(1,1,1,0.8);
+} */
+
+button,
+.btn {
+    cursor: pointer;
+    border: none;
+    /* background: transparent; */
+    padding: .25rem 1rem;
+    color: hsl(0, 0%, 100%);
+    border-radius: 5px;
+    background: hsla(10, 99%, 34%, 0.829);
+    transition: all .5s ease-in-out;
+}
+
+.app {
+    background-color: var(--background);
+    color: var(--text);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--background);
+    padding: 1rem;
+}
+
+nav h1 {
+    color: var(--heading-color);
+    font-size: 1.5rem;
+}
+
+nav button {
+    padding: 0;
+    width: 2rem;
+    background: transparent;
+}
+
+.react-icons {
+    font-size: 1.25rem;
+    vertical-align: middle;
+    transition: all .25s ease-in-out;
+    color: var(--icon-color);
+}
+
+.react-icons:hover {
+    color: var(--icon-hover);
+    transform: scale(1.15)
+}
+
+.header,
+.form {
+    display: grid;
+    gap: 3.5vh 0;
+    width: 100%;
+}
+
+.header nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-main {
+    min-height: 100vh;
+    width: min(100%, 1000px);
+    display: flex;
+    /* color: hsla(231, 77%, 90%, 0.75);
+    background-color: hsla(220, 100%, 3%, 0.935); */
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    row-gap: 0.5rem;
+    padding: 5vh 5vw;
+    margin: auto;
+    position: relative;
+}
+
+.posts {
+    display: grid;
+    gap: 3.5vh 0;
+    margin-block: 3vh;
+}
+
+.post {
+    display: grid;
+    text-align: justify;
+    padding: 1rem .5rem;
+    /* border: 0.1px solid red; */
+}
+
+.post button {
+    justify-self: end;
+}
+
+@media (min-width: 300px) {
+    nav h1 {
+        font-size: 2rem;
+    }
+
+    .react-icons {
+        font-size: 1.5rem;
+    }
+
+}
+
+@media (min-width: 481px) {
+    nav {
+        padding: 1rem 1.5rem;
+    }
+}
+
+@media (min-width: 769px) {
+    nav {
+        padding: 1rem 2rem;
+    }
+
+    nav h1 {
+        font-size: 2.5rem;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+
+        --foreground-color: hsla(223, 54%, 13%, 0.935);
+        --foreground: var(var(--foreground-color));
+        --background: var(var(--dark-color));
+    }
+
+}
+
+@media (prefers-color-scheme: light) {}
+
+@media (prefers-reduced-motion) {
+    html:focus-within {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::after,
+    *::before {
+        animation-duration: 0.1ms !important;
+        transition-duration: 0.1ms !important;
+        animation-iteration-count: 1;
+        scroll-behavior: auto !important;
+    }
+}
