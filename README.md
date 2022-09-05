@@ -1,5 +1,5 @@
 # Malon Nuggets
-A CRUD app built to fetch/handle data from APIs and manage React state.
+Malon Nuggets is an app built for sharing random thoughts and inspiring quotes with colleagues.
 
 ### Screenshot
 
