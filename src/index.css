@@ -148,6 +148,8 @@ button,
 
 .submit-btn {
     padding-block: .5rem;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
 }
 
 button:hover,
