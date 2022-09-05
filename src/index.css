@@ -2,27 +2,52 @@
 
 :root {
     color-scheme: light dark;
-    --light-color: hsla(0, 0%, 100%, 0.5);
+    --white: hsl(0, 0%, 100%);
+    --red: hsla(10, 99%, 34%, 0.825);
+    --button-hover: var(--red-hover);
+    --red-hover: hsl(10, 99%, 40%);
+    --post: var(--foreground-color);
+    --text: var(--dark-color);
+    --heading-color: var(--red);
+    --light-color: hsla(231, 77%, 90%, 0.95);
     --dark-color: hsla(220, 100%, 3%, 0.935);
     --foreground-color: hsla(231, 77%, 90%, 0.75);
-    --foreground: var(var(--foreground-color));
-    --background: var(var(--light-color));
-    --text: var(var(--dark-color));
-    --heading: var(var(--dark-color));
-    --icon-color: hsla(10, 99%, 34%, 0.829);
-    --icon-hover: hsla(10, 99%, 34%, 0.829);
+    --foreground: var(--foreground-color);
+    --background: var(--light-color);
+    --icon-color: var(--red);
+    --icon-hover: var(--red);
+    --post-shadow: var(--dark-color);
+    --background-input: transparent;
+    --shadow-input-1: rgba(17, 17, 26, 0.05);
+    --shadow-input-2: rgba(17, 17, 26, 0.1);
+
+    /* Toastify style override*/
+    --toastify-toast-width: min(95vw, 250px);
+    --toastify-toast-background: var(--background);
+    --toastify-font-family: 'Gruppo', cursive;
+    --toastify-text-color-light: var(--text);
 }
 
 .dark {
-    --white: hsl(0, 0%, 100%);
-    --light-color: hsla(231, 77%, 90%, 0.75);
-    --heading: var(var(--white));
+    --post: var(--foreground);
     --text: var(--light-color);
+    --heading-color: var(--white);
+    --light-color: hsla(231, 77%, 90%, 0.75);
     --foreground-color: hsla(223, 54%, 13%, 0.935);
     --foreground: var(--foreground-color);
     --background: var(--dark-color);
-    --icon-hover: hsla(10, 99%, 34%, 0.829);
+    --icon-hover: var(--red);
     --icon-color: hsl(0, 0%, 100%);
+    --post-shadow: var(--light-color);
+    --background-input: hsla(223, 54%, 13%, 0.35);
+    --shadow-input-1: rgba(80, 80, 93, 0.05);
+    --shadow-input-2: rgba(219, 219, 231, 0.1);
+
+    /* Toastify style override*/
+    --toastify-toast-background: var(--background);
+    --toastify-text-color-light: var(--text);
+    --toastify-text-color-dark: var(--text);
+
 }
 
 * *,
@@ -47,7 +72,7 @@ html:focus-within {
 
 body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-weight: lighter;
+    font-weight: 300;
     letter-spacing: .05rem;
     text-align: justify;
     text-rendering: optimizeSpeed;
@@ -61,7 +86,8 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+label {
     font-family: 'Gruppo', cursive;
     letter-spacing: 0;
     color: var(--heading-color);
@@ -83,39 +109,51 @@ select {
 }
 
 ::placeholder {
-    opacity: 0.65;
+    opacity: 0.35;
+    color: var(--text)
 }
 
-textarea {
+label {
+    margin-bottom: 1.5vh;
+}
+
+textarea,
+input[type="text"] {
     resize: none;
     padding: 1rem;
     border: none;
     outline: none;
-    background: transparent;
+    border-radius: 5px;
+    margin-bottom: 3.5vh;
+    background: var(--background-input);
+    box-shadow: var(--shadow-input-1) 0px 1px 0px inset, var(--shadow-input-2) 0px 0px 8px inset;
 }
-
-/* input[type="text"],  textarea{ 
- border: none;
-box-shadow:1px 1px 10px 5px rgba(1,1,1,0.2);
-transition: 0.6s ease;
-  background: transparent;
-
-} */
-
-/* input[type="text"]:focus, input[type="email"]:focus,  textarea:focus{ 
-box-shadow:0px 10px 10px -8px rgba(1,1,1,0.8);
-} */
 
 button,
 .btn {
     cursor: pointer;
     border: none;
-    /* background: transparent; */
     padding: .25rem 1rem;
-    color: hsl(0, 0%, 100%);
+    color: var(--white);
     border-radius: 5px;
-    background: hsla(10, 99%, 34%, 0.829);
-    transition: all .5s ease-in-out;
+    background: var(--red);
+    transition: all .35s ease-in-out;
+}
+
+button:hover,
+.btn:hover {
+    background: var(--button-hover);
+}
+
+.loader {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    margin: auto;
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    color: var(--heading-color);
 }
 
 .app {
@@ -124,11 +162,23 @@ button,
 }
 
 nav {
+    position: sticky;
+    transition: top .35s ease-in-out;
+    z-index: 10;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: var(--background);
     padding: 1rem;
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+}
+
+@supports (backdrop-filter: blur(2.5rem)) or (-webkit-backdrop-filter: blur(2.5rem)) {
+    nav {
+        background-color: var(--background);
+        backdrop-filter: blur(2.5rem);
+        -webkit-backdrop-filter: blur(2.5rem);
+    }
 }
 
 nav h1 {
@@ -142,6 +192,10 @@ nav button {
     background: transparent;
 }
 
+nav button:hover {
+    background: transparent;
+}
+
 .react-icons {
     font-size: 1.25rem;
     vertical-align: middle;
@@ -150,29 +204,20 @@ nav button {
 }
 
 .react-icons:hover {
-    color: var(--icon-hover);
+    color: var(--red-hover);
     transform: scale(1.15)
 }
 
 .header,
 .form {
     display: grid;
-    gap: 3.5vh 0;
     width: 100%;
-}
-
-.header nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
 }
 
 .header-main {
     min-height: 100vh;
-    width: min(100%, 1000px);
+    width: min(100%, 900px);
     display: flex;
-    /* color: hsla(231, 77%, 90%, 0.75);
-    background-color: hsla(220, 100%, 3%, 0.935); */
     align-items: center;
     justify-content: flex-start;
     flex-direction: column;
@@ -191,12 +236,23 @@ nav button {
 .post {
     display: grid;
     text-align: justify;
-    padding: 1rem .5rem;
-    /* border: 0.1px solid red; */
+    padding: 1rem;
+    background: var(--post);
+    box-shadow: var(--post-shadow) 0px 5px 15px 0px;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
 }
 
 .post button {
     justify-self: end;
+    margin-block: .5rem;
+}
+
+.post h2 {
+    text-align: left;
+}
+
+.post p {
+    margin-block: 1rem;
 }
 
 @media (min-width: 300px) {
@@ -214,6 +270,10 @@ nav button {
     nav {
         padding: 1rem 1.5rem;
     }
+
+    .post {
+        padding-inline: 2rem;
+    }
 }
 
 @media (min-width: 769px) {
@@ -224,19 +284,35 @@ nav button {
     nav h1 {
         font-size: 2.5rem;
     }
-}
 
-@media (prefers-color-scheme: dark) {
-    :root {
-
-        --foreground-color: hsla(223, 54%, 13%, 0.935);
-        --foreground: var(var(--foreground-color));
-        --background: var(var(--dark-color));
+    .post {
+        padding-inline: 2.5rem;
     }
-
 }
 
-@media (prefers-color-scheme: light) {}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --white: hsl(0, 0%, 100%);
+        --red: hsla(10, 99%, 34%, 0.825);
+        --button-hover: var(--red-hover);
+        --red-hover: hsl(10, 99%, 40%);
+        --post: var(--foreground-color);
+        --text: var(--dark-color);
+        --heading-color: var(--red);
+        --light-color: hsla(231, 77%, 90%, 0.95);
+        --dark-color: hsla(220, 100%, 3%, 0.935);
+        --foreground-color: hsla(231, 77%, 90%, 0.75);
+        --foreground: var(--foreground-color);
+        --background: var(--light-color);
+        --icon-color: var(--red);
+        --icon-hover: var(--red);
+        --post-shadow: var(--dark-color);
+        --background-input: transparent;
+        --shadow-input-1: rgba(17, 17, 26, 0.05);
+        --shadow-input-2: rgba(17, 17, 26, 0.1);
+    }
+}
 
 @media (prefers-reduced-motion) {
     html:focus-within {

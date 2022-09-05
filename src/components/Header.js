@@ -25,20 +25,23 @@ const Header = () => {
     return (
         <header className={`header ${theme}`}>
             <form onSubmit={handleSubmit} className="form">
+                <label htmlFor="title">Title</label>
                 <input
                     type="text"
                     value={title}
                     placeholder="Title"
+                    name="title"
                     required
                     onChange={(e) => setTitle(e.target.value)}
                 />
-
+                <label htmlFor="nugget">Nugget</label>
                 <textarea
                     type="text"
                     cols="15"
                     rows="5"
                     value={body}
                     placeholder="Your nugget for the tribe"
+                    name="nugget"
                     required
                     onChange={(e) => setBody(e.target.value)} />
 

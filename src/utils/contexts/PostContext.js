@@ -1,5 +1,7 @@
 import { useState, createContext, useEffect } from "react"
 import axios from "axios"
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // import { v4 as uuidv4 } from 'uuid';
 
 export const PostContext = createContext()
@@ -40,14 +42,15 @@ const PostContextProvider = ({ children }) => {
                 title,
                 body
             })
-            console.log(response.statusText)
+            console.log(response.status)
+            response.status === 201 && toast.success("Shared successfully", { autoClose: 2000, theme: "dark", width: "200" })
             setPosts([response.data, ...posts])
         } catch (err) {
-            if(err.response){
+            if (err.response) {
                 console.log(err.response.status)
-            } else if(err.request){
+            } else if (err.request) {
                 console.log(err.request)
-            } else{
+            } else {
                 console.log(err.message)
             }
         }
@@ -56,10 +59,11 @@ const PostContextProvider = ({ children }) => {
     const deletePost = async (id) => {
         try {
             const response = await axios.delete(`${baseURL}/${id}`)
-            console.log(response.statusText)
             setPosts(posts.filter(post => post.id !== id))
+            response.status === 200 && toast.success("Deleted successfully", { autoClose: 2000, theme: "dark", width: "200" })
         } catch (err) {
             console.log(err)
+            toast.error(err.message)
         }
     }
 
