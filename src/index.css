@@ -3,6 +3,7 @@
 :root {
     color-scheme: light dark;
     --white: hsl(0, 0%, 100%);
+    --grey: hsla(0, 0%, 30%, 0.5);
     --red: hsla(10, 99%, 34%, 0.825);
     --button-hover: var(--red-hover);
     --red-hover: hsl(10, 99%, 40%);
@@ -11,15 +12,18 @@
     --heading-color: var(--red);
     --light-color: hsla(231, 77%, 90%, 0.95);
     --dark-color: hsla(220, 100%, 3%, 0.935);
-    --foreground-color: hsla(231, 77%, 90%, 0.75);
+    /* --foreground-color: hsla(231, 77%, 90%, 0.75); */
+    --foreground-color: hsla(0, 0, 100%, 0.05);
     --foreground: var(--foreground-color);
-    --background: var(--light-color);
+    --background: var(--white);
     --icon-color: var(--red);
     --icon-hover: var(--red);
     --post-shadow: var(--dark-color);
     --background-input: transparent;
     --shadow-input-1: rgba(17, 17, 26, 0.05);
     --shadow-input-2: rgba(17, 17, 26, 0.1);
+    --shadow-input-3: rgba(0, 0, 0, 0.07);
+
 
     /* Toastify style override*/
     --toastify-toast-width: min(95vw, 250px);
@@ -121,8 +125,9 @@ textarea,
 input[type="text"] {
     resize: none;
     padding: 1rem;
-    border: none;
+    border: .25px solid var(--grey);
     outline: none;
+    -webkit-border-radius: 5px;
     border-radius: 5px;
     margin-bottom: 3.5vh;
     background: var(--background-input);
@@ -135,9 +140,14 @@ button,
     border: none;
     padding: .25rem 1rem;
     color: var(--white);
+    font-weight: inherit;
     border-radius: 5px;
     background: var(--red);
     transition: all .35s ease-in-out;
+}
+
+.submit-btn {
+    padding-block: .5rem;
 }
 
 button:hover,
@@ -238,9 +248,9 @@ nav button:hover {
     text-align: justify;
     padding: 1rem;
     background: var(--post);
-    box-shadow: var(--post-shadow) 0px 5px 15px 0px;
-    box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
 }
+
 
 .post button {
     justify-self: end;
@@ -257,13 +267,20 @@ nav button:hover {
 
 @media (min-width: 300px) {
     nav h1 {
-        font-size: 2rem;
+        font-size: 2.25rem;
+    }
+
+    label {
+        font-size: 1.5rem;
     }
 
     .react-icons {
         font-size: 1.5rem;
     }
 
+    p {
+        font-size: 1.15rem;
+    }
 }
 
 @media (min-width: 481px) {
@@ -312,6 +329,7 @@ nav button:hover {
         --shadow-input-1: rgba(17, 17, 26, 0.05);
         --shadow-input-2: rgba(17, 17, 26, 0.1);
     }
+
 }
 
 @media (prefers-reduced-motion) {

@@ -17,6 +17,8 @@ const Header = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (invalidTitle || invalidBody) {
+            setTitle("")
+            setBody("")
             return toast.error("Please enter a valid input", { autoClose: 2000, theme: "dark", width: "200" })
         }
         addPost(title, body)
@@ -47,7 +49,7 @@ const Header = () => {
                     required
                     onChange={(e) => setBody(e.target.value)} />
 
-                <input type="submit" value="Share" className="btn" />
+                <input type="submit" value="Share" className="btn submit-btn" />
             </form>
         </header>
     )

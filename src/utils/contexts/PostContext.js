@@ -10,6 +10,7 @@ const PostContextProvider = ({ children }) => {
     const [loading, setLoading] = useState(true)
     const baseURL = "https://jsonplaceholder.typicode.com/posts"
     const limit = "?_limit=10"
+    const toastConfig = { autoClose: 2000, theme: "dark" }
 
     const getPosts = async () => {
         try {
@@ -18,6 +19,7 @@ const PostContextProvider = ({ children }) => {
             return await response.data
         } catch (err) {
             console.log(err)
+            toast.error(err.message, toastConfig)
         }
     }
 
@@ -33,6 +35,7 @@ const PostContextProvider = ({ children }) => {
             setLoading(false)
         }
         fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const addPost = async (title, body) => {
@@ -42,7 +45,6 @@ const PostContextProvider = ({ children }) => {
                 title,
                 body
             })
-            console.log(response.status)
             response.status === 201 && toast.success("Shared successfully", { autoClose: 2000, theme: "dark", width: "200" })
             setPosts([response.data, ...posts])
         } catch (err) {
@@ -52,6 +54,7 @@ const PostContextProvider = ({ children }) => {
                 console.log(err.request)
             } else {
                 console.log(err.message)
+                toast.error(err.message, toastConfig)
             }
         }
     }
@@ -60,10 +63,10 @@ const PostContextProvider = ({ children }) => {
         try {
             const response = await axios.delete(`${baseURL}/${id}`)
             setPosts(posts.filter(post => post.id !== id))
-            response.status === 200 && toast.success("Deleted successfully", { autoClose: 2000, theme: "dark", width: "200" })
+            response.status === 200 && toast.success("Deleted successfully", { autoClose: 2000, theme: "dark" })
         } catch (err) {
             console.log(err)
-            toast.error(err.message)
+            toast.error(err.message, toastConfig)
         }
     }
 
