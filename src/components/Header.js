@@ -1,4 +1,6 @@
 import { useState, useContext } from "react"
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { PostContext } from "../utils/contexts/PostContext"
 import { ThemeContext } from "../utils/contexts/ThemeContext"
 
@@ -15,7 +17,7 @@ const Header = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (invalidTitle || invalidBody) {
-            return alert("Please enter a valid input")
+            return toast.error("Please enter a valid input", { autoClose: 2000, theme: "dark", width: "200" })
         }
         addPost(title, body)
         setTitle("")
