@@ -19,7 +19,7 @@ const ThemeContextProvider = ({ children }) => {
     }, [])
     
     const toggleTheme = () => {
-        setPreferredTheme(!preferredTheme)
+        setPreferredTheme(preferredTheme => !preferredTheme)
         localStorage.setItem("theme", preferredTheme === false ? "light" : "dark")
     };
 

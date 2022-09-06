@@ -10,32 +10,41 @@ const PostContextProvider = ({ children }) => {
     const [loading, setLoading] = useState(true)
     const baseURL = "https://jsonplaceholder.typicode.com/posts"
     const limit = "?_limit=10"
-    const toastConfig = { autoClose: 2000, theme: "dark" }
+    const theme = localStorage.getItem("theme") || "dark"
+    const toastConfig = { autoClose: 2000, theme }
 
-    const getPosts = async () => {
-        try {
-            const response = await axios.get(`${baseURL}/${limit}`)
-            // const response = await axios.get(`${baseURL}`)
-            return await response.data
-        } catch (err) {
-            console.log(err)
-            toast.error(err.message, toastConfig)
-        }
-    }
+    // const getPosts = async () => {
+    //     try {
+    //         const response = await axios.get(`${baseURL}/${limit}`)
+    //         // const response = await axios.get(`${baseURL}`)
+    //         return await response.data
+    //     } catch (err) {
+    //         toast.error(err.message, toastConfig)
+    //         console.log(err)
+    //     }
+    // }
 
     useEffect(() => {
+        const cancelToken = axios.CancelToken.source()
         const fetchData = async () => {
             setLoading(true)
             try {
-                const data = await getPosts()
-                setPosts(data)
+            const response = await axios.get(`${baseURL}/${limit}`, {cancelToken:cancelToken.token})
+                // const data = await getPosts()
+                setPosts(response.data)
             } catch (err) {
-                console.log(err)
+                if(axios.isCancel(err)){
+                    toast.error("Request cancelled", toastConfig)
+                } else {
+                    toast.error(err.message, toastConfig)
+                    console.log(err)
+                }
             }
             setLoading(false)
+            return cancelToken.cancel()
         }
         fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const addPost = async (title, body) => {
@@ -45,7 +54,7 @@ const PostContextProvider = ({ children }) => {
                 title,
                 body
             })
-            response.status === 201 && toast.success("Shared successfully", { autoClose: 2000, theme: "dark", width: "200" })
+            response.status === 201 && toast.success("Shared successfully", toastConfig)
             setPosts([response.data, ...posts])
         } catch (err) {
             if (err.response) {
@@ -53,8 +62,8 @@ const PostContextProvider = ({ children }) => {
             } else if (err.request) {
                 console.log(err.request)
             } else {
-                console.log(err.message)
                 toast.error(err.message, toastConfig)
+                console.log(err.message)
             }
         }
     }
@@ -63,10 +72,10 @@ const PostContextProvider = ({ children }) => {
         try {
             const response = await axios.delete(`${baseURL}/${id}`)
             setPosts(posts.filter(post => post.id !== id))
-            response.status === 200 && toast.success("Deleted successfully", { autoClose: 2000, theme: "dark" })
+            response.status === 200 && toast.success("Deleted successfully", toastConfig)
         } catch (err) {
-            console.log(err)
             toast.error(err.message, toastConfig)
+            console.log(err)
         }
     }
 
