@@ -13,24 +13,12 @@ const PostContextProvider = ({ children }) => {
     const theme = localStorage.getItem("theme") || "dark"
     const toastConfig = { autoClose: 2000, theme }
 
-    // const getPosts = async () => {
-    //     try {
-    //         const response = await axios.get(`${baseURL}/${limit}`)
-    //         // const response = await axios.get(`${baseURL}`)
-    //         return await response.data
-    //     } catch (err) {
-    //         toast.error(err.message, toastConfig)
-    //         console.log(err)
-    //     }
-    // }
-
     useEffect(() => {
         const cancelToken = axios.CancelToken.source()
         const fetchData = async () => {
             setLoading(true)
             try {
             const response = await axios.get(`${baseURL}/${limit}`, {cancelToken:cancelToken.token})
-                // const data = await getPosts()
                 setPosts(response.data)
             } catch (err) {
                 if(axios.isCancel(err)){
