@@ -9,27 +9,30 @@ const PostContextProvider = ({ children }) => {
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(true)
     const baseURL = "https://jsonplaceholder.typicode.com/posts"
-    const limit = "?_limit=10"
+    const limit = 20
     const theme = localStorage.getItem("theme") || "dark"
     const toastConfig = { autoClose: 2000, theme }
 
     useEffect(() => {
-        const cancelToken = axios.CancelToken.source()
+        // const cancelToken = axios.CancelToken.source()
         const fetchData = async () => {
             setLoading(true)
             try {
-            const response = await axios.get(`${baseURL}/${limit}`, {cancelToken:cancelToken.token})
+            // const response = await axios.get(`${baseURL}/${limit}`, {cancelToken:cancelToken.token})
+            const response = await axios.get(`${baseURL}/?_limit=${limit}`)
                 setPosts(response.data)
             } catch (err) {
-                if(axios.isCancel(err)){
-                    toast.error("Request cancelled", toastConfig)
-                } else {
                     toast.error(err.message, toastConfig)
                     console.log(err)
-                }
+                // if(axios.isCancel(err)){
+                //     toast.error("Request cancelled", toastConfig)
+                // } else {
+                //     toast.error(err.message, toastConfig)
+                //     console.log(err)
+                // }
             }
             setLoading(false)
-            return cancelToken.cancel()
+            // return cancelToken.cancel()
         }
         fetchData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -37,6 +40,7 @@ const PostContextProvider = ({ children }) => {
 
     const addPost = async (title, body) => {
         // const uniqueID = uuidv4()
+        setLoading(true)
         try {
             const response = await axios.post(baseURL, {
                 title,
@@ -54,9 +58,12 @@ const PostContextProvider = ({ children }) => {
                 console.log(err.message)
             }
         }
+        setLoading(false)
+
     }
 
     const deletePost = async (id) => {
+        setLoading(true)
         try {
             const response = await axios.delete(`${baseURL}/${id}`)
             setPosts(posts.filter(post => post.id !== id))
@@ -65,6 +72,7 @@ const PostContextProvider = ({ children }) => {
             toast.error(err.message, toastConfig)
             console.log(err)
         }
+        setLoading(false)
     }
 
     return (

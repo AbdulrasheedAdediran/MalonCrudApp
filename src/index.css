@@ -144,12 +144,21 @@ button,
     border-radius: 5px;
     background: var(--red);
     transition: all .35s ease-in-out;
+    user-select: none;
+}
+
+button:disabled {
+    cursor: not-allowed;
 }
 
 .submit-btn {
     padding-block: .5rem;
     -webkit-border-radius: 5px;
     border-radius: 5px;
+}
+
+.delete-btn {
+    width: 5rem;
 }
 
 button:hover,
@@ -267,6 +276,71 @@ nav button:hover {
     margin-block: 1rem;
 }
 
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    column-gap: 0.5rem;
+
+}
+
+.pages {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 0.5rem;
+    margin-block: 2rem;
+}
+
+.pagination-btn.active,
+.pagination-btn:hover {
+    background: var(--red-hover);
+    color: var(--white);
+}
+
+.num-btn {
+    color: var(--text);
+    aspect-ratio: 1;
+    width: 1.75rem;
+    border-radius: 50%;
+    padding: 0.2rem;
+    background: transparent;
+    transition: background 0.3s ease-in-out;
+}
+
+
+.pagination-btn:disabled {
+    background: var(--red);
+    color: var(--text);
+}
+
+
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-spinner {
+    aspect-ratio: 1;
+    width: 1rem;
+    border: 10px solid var(--white);
+    border-top: 10px solid var(--text);
+    border-radius: 50%;
+    animation: spinner 2.5s linear infinite;
+}
+
+.spinner-container {
+    display: grid;
+    place-items: center;
+    height: 1.5rem;
+}
+
 @media (min-width: 300px) {
     nav h1 {
         font-size: 2.25rem;
@@ -307,6 +381,20 @@ nav button:hover {
     .post {
         padding-inline: 2.5rem;
     }
+
+    .pagination {
+        column-gap: 1rem;
+
+    }
+
+    .num-btn {
+
+        width: 2.5rem;
+
+        padding: 0.25rem;
+    }
+
+
 }
 
 
